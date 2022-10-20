@@ -8,8 +8,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <style>
+     body{
+    background: -webkit-linear-gradient(left,  black,white,skyblue);
+    }
+    .container-5{
+        background-color:white;
+        margin: auto;
+        width: 50%;
+        padding: 10px;
+    }
+    
+    </style>
 <br><br>
-   <div class="container col-md-5">
+   <div class="container-5 col-md-5">
       <div id='calendar_id'></div>
    </div>
    <script>
