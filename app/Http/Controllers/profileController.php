@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Controllers\Hash;
 
 
 class profileController extends Controller
@@ -34,6 +35,7 @@ class profileController extends Controller
       
       return view('profile.profile')->withUser($user);
     }
+    
 
 
 }

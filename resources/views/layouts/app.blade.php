@@ -187,16 +187,24 @@ body {
     <div id="app">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
 			<div class="container">
-				<a class="navbar-brand" href="{{url('home')}}"><span>BABA</span>A<span style="color:orange">r</span>t</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
-			
+				<a class="navbar-brand" href=""><span>BABA</span>A<span style="color:orange">r</span>t</a> <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+				
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				 
+				  @if(Auth::check())
 					<ul class="navbar-nav ms-auto">
+					 @if(Auth::user()->type=='admin')
+					 <li class="nav-item ">
+							<a id="navbarDropdown" class="nav-link " href="{{route('admin.home')}}"  aria-haspopup="true" aria-expanded="false" v-pre>
+								Dashboard
+							</a>
+						</li>
+					
+						@else
 						<li class="nav-item ">
 							<a id="navbarDropdown" class="nav-link " href="{{url('home')}}"  aria-haspopup="true" aria-expanded="false" v-pre>
 								H<span style="color:orange">O</span>ME
-
 							</a>
-							
 						</li>
 						<li class="nav-item ">
 							<a id="navbarDropdown" class="nav-link " href="{{url('userdata-home')}}"  aria-haspopup="true" aria-expanded="false" v-pre>
@@ -208,11 +216,13 @@ body {
 								Product
 							</a>
 						</li>
-					<li class="nav-item ">
+							<li class="nav-item ">
 							<a id="navbarDropdown" class="nav-link " href="{{url('profile')}}"  aria-haspopup="true" aria-expanded="false" v-pre>
 								Profile
 							</a>
 						</li>
+						@endif	
+				  @endif	
 				<ul class="navbar-nav me-auto">
 					</ul>
 					<ul class="navbar-nav ms-auto">
@@ -238,7 +248,8 @@ body {
 							width="30" height="30" style="border-radius: 50%">
 							</a>
 							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-							
+							 @if(Auth::user()->type=='admin')
+								<a class="dropdown-item" href="{{url('profile')}}">Profile</a>
 								<a class="dropdown-item" href="{{url('calendar')}}">Calendar</a>
 								<a class="dropdown-item" href="{{ route('logout') }}"
 									onclick="event.preventDefault();
@@ -248,6 +259,17 @@ body {
 								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 									@csrf
 								</form>
+							@else
+								<a class="dropdown-item" href="{{url('calendar')}}">Calendar</a>
+								<a class="dropdown-item" href="{{ route('logout') }}"
+									onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();">
+									{{ __('Logout') }}
+								</a>
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+									@csrf
+								</form>
+							@endif
 							</div>
 						</li>
 						@endguest

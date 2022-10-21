@@ -68,12 +68,22 @@
     }
 </style>
 <div class="container emp-profile">
+        @if (session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
        @php
         $adminData = Auth::user();
         @endphp
  @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
+                            
                             @foreach($errors->all() as $error)
                             <li>
                                 {{$error}}
@@ -125,7 +135,12 @@
                                  
                                 <li class="nav-item">
                                     <button type="button" class="nav-link " data-toggle="modal" data-target="#exampleModal">
-                                        Update profile
+                                        Edit profile
+                                    </button>
+                                </li>
+                                 <li class="nav-item">
+                                    <button type="button" style="color:skyblue;" class="nav-link " data-toggle="modal" data-target="#myModalHorizontal">
+                                       Password change
                                     </button>
                                 </li>
                             </ul>
@@ -146,6 +161,7 @@
                         </div>
                     </div>
                     <div class="col-md-4">
+                    
                         <div class="tab-content profile-tab" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                          <input type="hidden" name="hidden_id" id="hidden_id" />
@@ -208,7 +224,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{route('profileupdate')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('profileupdate') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <div class="form-group">
@@ -245,6 +261,58 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="myModalHorizontal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header" style="background: -webkit-linear-gradient(left,  black,white,skyblue)">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="ion-android-close"></span></button>
+            <h4 class="modal-title" id="myModalLabel" style="color: black;">Change password</h4>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>            <!-- Modal Body -->
+        <div class="modal-body">
+            <form action="{{ route('changePassword') }}" method="POST">
+                        @csrf
+                        <div class="card-body">
+                       
+                         
+                            <div class="mb-3">
+                                <label for="oldPasswordInput" class="form-label">Old Password</label>
+                                <input name="current-password" type="password" class="form-control @error('current-password') is-invalid @enderror" id="current-password"
+                                    placeholder="Old Password" required>
+                                   @if ($errors->has('current-password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('current-password') }}</strong>
+                                    </span> 
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPasswordInput" class="form-label">New Password</label>
+                                <input name="new-password" type="password" class="form-control @error('new-password') is-invalid @enderror" id="new-password"
+                                    placeholder="New Password" required>
+                                  @if ($errors->has('new-password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('new-password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirmNewPasswordInput" class="form-label">Confirm New Password</label>
+                                <input name="new-password_confirmation" type="password" class="form-control" id="new-password_confirmation"
+                                    placeholder="Confirm New Password" required>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit"class="btn btn-success">Save password</button>
+                        </div>
+                    </form>
+        </div>
+    </div>
+</div>
+ 
 
     <div class="container">
        
